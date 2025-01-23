@@ -1,4 +1,4 @@
-<div class="relative overflow-x-auto">
+<div class="relative overflow-x-auto shadow shadow-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
@@ -12,10 +12,10 @@
         <tbody>
             @foreach ($tableData['data'] as $index => $row)
                 <!-- Alternating row colors between white and light blue -->
-                <tr class="{{ $index % 2 == 0 ? 'bg-white' : 'bg-blue-100' }} border-b">
+                <tr class="{{ $loop->even ? 'bg-white' : 'bg-blue-50' }} border-b">
                     @foreach ($row as $key => $cell)
                         <!-- First column as <th> and others as <td> -->
-                        @if ($key == 0)
+                        @if ($loop->first)
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                 {{$cell}}
                             </th>
