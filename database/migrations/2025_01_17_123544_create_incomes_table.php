@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
-            $table->double('amount');
+            $table->date('Date');
+            $table->string('Category', length: 100);
+            $table->double('Amount');
             $table->timestamps();
         });
     }
