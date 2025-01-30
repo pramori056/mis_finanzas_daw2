@@ -36,7 +36,7 @@ class IncomeController extends Controller
     public function create()
     {
         //
-        return '<p>Esta es la página del create de incomes</p>';
+        return view('income.create',['title' => 'New income']);
     }
 
     /**

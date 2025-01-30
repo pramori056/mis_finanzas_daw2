@@ -35,7 +35,7 @@ class OutcomeController extends Controller
      */
     public function create()
     {
-        //
+        return view('outcome.create',['title' => 'New outcome']);
     }
 
     /**
