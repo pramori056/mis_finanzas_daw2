@@ -10,12 +10,14 @@ class IncomeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request) // Include Request as a parameter
     {
-        $tableData = Incomes::all()->toArray();        
-        //Aquí la lógica de negocio para el index
+        $tableData = Incomes::all()->toArray(); // Fetch all outcomes
 
-        // Transformación del array para que tenga las keys heading y data
+        // Get the success message from the session
+        $successMessage = $request->session()->get('success');
+
+        // Transform the array to have the keys heading and data
         if (!empty($tableData)) {
             $headings = array_keys($tableData[0]);
         } else {
@@ -23,11 +25,15 @@ class IncomeController extends Controller
         }
 
         $structuredData = [
-            'heading'=>$headings,
-            'data'=>$tableData,
+            'heading' => $headings,
+            'data' => $tableData,
         ];
 
-        return view('income.index',['title' => 'My incomes','tableData' => $structuredData]);
+        return view('income.index', [
+            'title' => 'My Incomes',
+            'tableData' => $structuredData,
+            'successMessage' => $successMessage,
+        ]);
     }
 
     /**
@@ -44,7 +50,21 @@ class IncomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'category' => 'required|string|max:255',
+            'amount' => 'required|numeric|min:0',
+        ]);
+
+        // Create a new income record
+        Incomes::create([ // Use the model name here
+            'date' => $request->date,
+            'category' => $request->category,
+            'amount' => $request->amount,
+        ]);
+
+        // Redirect or return a response
+        return redirect()->route('incomes.index')->with('success', 'Income created successfully.');
     }
 
     /**

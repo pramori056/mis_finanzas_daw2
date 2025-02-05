@@ -1,19 +1,19 @@
 <?php
 
-namespace App\View\Components\Forms;
+namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Transaction extends Component
+class Alert extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public array $options, public string $method = 'POST', public string $action = '')
+    public function __construct(public $message = null)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -21,6 +21,6 @@ class Transaction extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.forms.transaction');
+        return view('components.alert');
     }
 }

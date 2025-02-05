@@ -10,12 +10,13 @@ class OutcomeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tableData = Outcomes::all()->toArray();        
-        //Aquí la lógica de negocio para el index
+        $tableData = Outcomes::all()->toArray();
+        // Get the success message from the session
+        $successMessage = $request->session()->get('success');
 
-        // Transformación del array para que tenga las keys heading y data
+        // Transform the array to have the keys heading and data
         if (!empty($tableData)) {
             $headings = array_keys($tableData[0]);
         } else {
@@ -23,11 +24,15 @@ class OutcomeController extends Controller
         }
 
         $structuredData = [
-            'heading'=>$headings,
-            'data'=>$tableData,
+            'heading' => $headings,
+            'data' => $tableData,
         ];
 
-        return view('outcome.index',['title' => 'My outcomes','tableData' => $structuredData]);
+        return view('outcome.index', [
+            'title' => 'My Outcomes',
+            'tableData' => $structuredData,
+            'successMessage' => $successMessage,
+        ]);
     }
 
     /**
@@ -43,7 +48,21 @@ class OutcomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'category' => 'required|string|max:255',
+            'amount' => 'required|numeric|min:0',
+        ]);
+
+        // Create a new income record
+        Outcomes::create([ // Use the model name here
+            'date' => $request->date,
+            'category' => $request->category,
+            'amount' => $request->amount,
+        ]);
+
+        // Redirect or return a response
+        return redirect()->route('outcomes.index')->with('success', 'Outcome created successfully.');
     }
 
     /**
