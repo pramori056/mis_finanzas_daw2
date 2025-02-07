@@ -70,7 +70,7 @@ class OutcomeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return '<p>Esta es la página del show de outcomes</p>';
     }
 
     /**
@@ -78,7 +78,7 @@ class OutcomeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return '<p>Esta es la página del edit de outcomes</p>';
     }
 
     /**
@@ -86,7 +86,7 @@ class OutcomeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return '<p>Esta es la página del update de outcomes</p>';
     }
 
     /**
@@ -94,6 +94,6 @@ class OutcomeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return '<p>Esta es la página del destroy de outcomes</p>';
     }
 }

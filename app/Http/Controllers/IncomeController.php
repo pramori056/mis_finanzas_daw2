@@ -90,8 +90,7 @@ class IncomeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-        
+        return '<p>Esta es la página del update de incomes</p>';
     }
 
     /**
@@ -99,6 +98,6 @@ class IncomeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return '<p>Esta es la página del destroy de incomes</p>';
     }
 }
