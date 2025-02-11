@@ -130,6 +130,10 @@ class IncomeController extends Controller
      */
     public function destroy(string $id)
     {
-        return '<p>Esta es la página del destroy de incomes</p>';
+        $income = Incomes::findOrFail($id);
+
+        $income->delete();
+
+        return redirect()->route('incomes.index')->with('success', 'Income deleted successfully.');
     }
 }

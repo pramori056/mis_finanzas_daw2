@@ -130,6 +130,10 @@ class OutcomeController extends Controller
      */
     public function destroy(string $id)
     {
-        return '<p>Esta es la página del destroy de outcomes</p>';
+        $income = Outcomes::findOrFail($id);
+
+        $income->delete();
+
+        return redirect()->route('outcomes.index')->with('success', 'Outcome deleted successfully.');
     }
 }
