@@ -30,8 +30,7 @@
                     @endforeach
                     <td class="px-6 py-4 text-gray-900 whitespace-nowrap flex items-center justify-between"> <!-- New Actions cell with flex -->
                         <div>
-                            <x-button href="{{ route($origin.'.edit', $row['id']) }}" class="bg-transparent hover:bg-yellow-500 text-yellow-700 font-semibold hover:text-white py-2 px-4 border border-yellow-500 hover:border-transparent rounded inline-flex items-center">Edit</x-button>
-                        </div>
+                            <x-button href="{{ route($origin.'.edit', $row['id']) }}" class="bg-transparent hover:bg-yellow-500 text-yellow-700 font-semibold hover:text-white py-2 px-4 border border-yellow-500 hover:border-transparent rounded inline-flex items-center">Edit</x-button>                        </div>
                         <div>
                             <form action="{{ route($origin.'.destroy', $row['id']) }}" method="POST" style="display:inline;">
                                 @csrf

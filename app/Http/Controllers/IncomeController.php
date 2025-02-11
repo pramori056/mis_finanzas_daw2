@@ -10,11 +10,10 @@ class IncomeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request) // Include Request as a parameter
+    public function index(Request $request)
     {
-        $tableData = Incomes::all()->toArray(); // Fetch all outcomes
+        $tableData = Incomes::all()->toArray();
 
-        // Get the success message from the session
         $successMessage = $request->session()->get('success');
 
         // Transform the array to have the keys heading and data
@@ -57,13 +56,12 @@ class IncomeController extends Controller
         ]);
 
         // Create a new income record
-        Incomes::create([ // Use the model name here
+        Incomes::create([
             'date' => $request->date,
             'category' => $request->category,
             'amount' => $request->amount,
         ]);
 
-        // Redirect or return a response
         return redirect()->route('incomes.index')->with('success', 'Income created successfully.');
     }
 
@@ -81,8 +79,14 @@ class IncomeController extends Controller
      */
     public function edit(string $id)
     {
-        //
-        return '<p>Esta es la página del edit de incomes</p>';
+        // Fetch the income record by ID
+        $income = Incomes::findOrFail($id);
+
+        return view('income.edit', [
+            'title' => 'Edit Income',
+            'income' => $income,
+            'options' => ['Salary', 'Donation', 'Investment', 'Freelance', 'Other'], // You can customize this as needed
+        ]);
     }
 
     /**
@@ -90,7 +94,16 @@ class IncomeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return '<p>Esta es la página del update de incomes</p>';
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'category' => 'required|string|max:255',
+            'amount' => 'required|numeric|min:0',
+        ]);
+    
+        $income = Incomes::findOrFail($id);
+        $income->update($validated);
+    
+        return redirect()->route('incomes.index')->with('success', 'Income updated successfully.');
     }
 
     /**

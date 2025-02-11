@@ -78,7 +78,14 @@ class OutcomeController extends Controller
      */
     public function edit(string $id)
     {
-        return '<p>Esta es la página del edit de outcomes</p>';
+        // Fetch the income record by ID
+        $outcome = Outcomes::findOrFail($id);
+
+        return view('outcome.edit', [
+            'title' => 'Edit Outcome',
+            'outcome' => $outcome,
+            'options' => ['Rent', 'Leisure', 'Shopping', 'Transport', 'Other'], // You can customize this as needed
+        ]);
     }
 
     /**
@@ -86,7 +93,16 @@ class OutcomeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return '<p>Esta es la página del update de outcomes</p>';
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'category' => 'required|string|max:255',
+            'amount' => 'required|numeric|min:0',
+        ]);
+    
+        $outcome = Outcomes::findOrFail($id);
+        $outcome->update($validated);
+    
+        return redirect()->route('outcomes.index')->with('success', 'Outcome updated successfully.');
     }
 
     /**

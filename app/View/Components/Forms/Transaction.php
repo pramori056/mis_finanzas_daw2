@@ -11,8 +11,14 @@ class Transaction extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public array $options, public string $method = 'POST', public string $action = '')
-    {
+    public function __construct(
+        public array $options,
+        public string $method = 'POST',
+        public string $action = '',
+        public ?string $date = null, // Add date property
+        public ?string $category = null, // Add category property
+        public ?float $amount = null // Add amount property
+    ) {
         //
     }
 
@@ -23,4 +29,4 @@ class Transaction extends Component
     {
         return view('components.forms.transaction');
     }
-}
+}   
