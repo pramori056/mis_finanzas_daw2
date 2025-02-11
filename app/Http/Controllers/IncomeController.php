@@ -68,10 +68,29 @@ class IncomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-        //
-        return '<p>Esta es la página del show de incomes</p>';
+        $tableData = Incomes::where('id', $id)->get()->toArray();
+
+        $successMessage = $request->session()->get('success');
+
+        if (!empty($tableData)) {
+            $headings = array_keys($tableData[0]);
+        } else {
+            $headings = [];
+        }
+
+        $structuredData = [
+            'heading' => $headings,
+            'data' => $tableData,
+        ];
+
+        // Llamar a la vista index, pero con los datos del registro específico
+        return view('income.index', [
+            'title' => 'Income Details',
+            'tableData' => $structuredData,
+            'successMessage' => $successMessage,
+        ]);
     }
 
     /**
