@@ -1,4 +1,5 @@
 <x-layouts.index :title="$title">
+    <x-error-message />
     <x-forms.transaction 
         :options="$options" 
         method="PUT" 
